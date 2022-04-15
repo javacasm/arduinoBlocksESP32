@@ -179,11 +179,20 @@ Ahora podemos desconectar el dispositivo del PC y comprobar el funcionamiento
 
 ¿Qué es IOT?
 
+
+![](./images/Internet_de_las_Cosas.jpg)
+
 ### MQTT
 
 ¿Qué es MQTT?
 
+![](./images/MQTT_arquitectura.png)
+
+![](./images/mqtt-architecture.png)
+
 ### Publicación en Adafruit IO
+
+![](./images/IOT%2Breles.png)
 
 
 ![](./images/programa_accel_mqtt_adafruitIO.png)
