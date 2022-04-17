@@ -151,6 +151,8 @@ Para controlar mejor el color del led vamos a crear una función, que es una man
 
 ## Acelerómetro 3 ejes adxl345
 
+![](./images/accel-pitch-roll-yaw.jpg)
+
 Vamos a conectar un Acelerómetro de 3 ejes con conexión I2C
 
 
