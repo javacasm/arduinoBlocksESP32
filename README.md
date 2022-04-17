@@ -198,3 +198,4 @@ Ahora podemos desconectar el dispositivo del PC y comprobar el funcionamiento
 ![](./images/programa_accel_mqtt_adafruitIO.png)
 
 [Publicación de la Acceleración en adafruit.IO con MQTT](http://www.arduinoblocks.com/web/project/782713)
+
