@@ -36,7 +36,7 @@ Debemos soldar los pines
 
 ![](./images/feather_solder1.jpg)
 
-## [Acelerómetro 3 ejes adxl345](https://tienda.bricogeek.com/acelerometros/1158-acelerometro-3-ejes-adxl345-2g4g8g16g.html) [(Details)](https://www.adafruit.com/product/1231#technical-details)
+## [Acelerómetro 3 ejes adxl345](https://tienda.bricogeek.com/acelerometros/1158-acelerometro-3-ejes-adxl345-2g4g8g16g.html) [(Details)](https://learn.adafruit.com/adxl345-digital-accelerometer?view=all)
 
 ![](./images/acelerometro-3-ejes-adxl345-2g4g8g16g.jpg)
 
@@ -56,7 +56,7 @@ Debemos soldar los pines
 * Alimentación: 3.3 a 5V
 * Comunicación: I2C o SPI
 
-## [Pantalla TFT color 1.14' 240x135 - ST7789](https://tienda.bricogeek.com/pantallas-lcd/1372-pantalla-tft-color-114-240x135-st7789.html) [(Details)](https://www.adafruit.com/product/4383)
+## [Pantalla TFT color 1.14' 240x135 - ST7789](https://tienda.bricogeek.com/pantallas-lcd/1372-pantalla-tft-color-114-240x135-st7789.html) [(Details)](https://learn.adafruit.com/adafruit-1-14-240x135-color-tft-breakout?view=all)
 
 ![](./images/pantalla-tft-color-114-240x135-st7789.jpg)
 
@@ -207,103 +207,9 @@ Vamos a medir ahora la temperatura, la presión y la humedad usando un sensor BM
 
 ![](./images/led_RGB_bme280_bb.png)
 
-Desgraciadamente, arduinoBlocks no dispone de bloque para el sensor BME280, por eso vamos a usar el código de ejemplo de la librería Adafrui BME280 desde el Gestor de librerías (Programa->Librerías->Administrador de librerías) de [Arduino IDE](https://arduino.cc/software)
+Desgraciadamente, arduinoBlocks no dispone de bloque para el sensor BME280, por eso vamos a usar el código de [ejemplo](./codigo/test_BME280/test_BME280.ino) de la librería Adafruit BME280 desde el Gestor de librerías (Programa->Librerías->Administrador de librerías) de [Arduino IDE](https://arduino.cc/software)
 
-
-
-```C++
-/***************************************************************************
-  This is a library for the BME280 humidity, temperature & pressure sensor
-
-  Designed specifically to work with the Adafruit BME280 Breakout
-  ----> http://www.adafruit.com/products/2650
-
-  These sensors use I2C or SPI to communicate, 2 or 4 pins are required
-  to interface. The device's I2C address is either 0x76 or 0x77.
-
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit andopen-source hardware by purchasing products
-  from Adafruit!
-
-  Written by Limor Fried & Kevin Townsend for Adafruit Industries.
-  BSD license, all text above must be included in any redistribution
-  See the LICENSE file for details.
- ***************************************************************************/
-
-#include <Wire.h>
-#include <SPI.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BME280.h>
-
-#define BME_SCK 13
-#define BME_MISO 12
-#define BME_MOSI 11
-#define BME_CS 10
-
-#define SEALEVELPRESSURE_HPA (1013.25)
-
-Adafruit_BME280 bme; // I2C
-//Adafruit_BME280 bme(BME_CS); // hardware SPI
-//Adafruit_BME280 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK); // software SPI
-
-unsigned long delayTime;
-
-void setup() {
-    Serial.begin(9600);
-    while(!Serial);    // time to get serial running
-    Serial.println(F("BME280 test"));
-
-    unsigned status;
-    
-    // default settings
-    status = bme.begin();  
-    // You can also pass in a Wire library object like &Wire2
-    // status = bme.begin(0x76, &Wire2)
-    if (!status) {
-        Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
-        Serial.print("SensorID was: 0x"); Serial.println(bme.sensorID(),16);
-        Serial.print("        ID of 0xFF probably means a bad address, a BMP 180 or BMP 085\n");
-        Serial.print("   ID of 0x56-0x58 represents a BMP 280,\n");
-        Serial.print("        ID of 0x60 represents a BME 280.\n");
-        Serial.print("        ID of 0x61 represents a BME 680.\n");
-        while (1) delay(10);
-    }
-    
-    Serial.println("-- Default Test --");
-    delayTime = 1000;
-
-    Serial.println();
-}
-
-
-void loop() { 
-    printValues();
-    delay(delayTime);
-}
-
-
-void printValues() {
-    Serial.print("Temperature = ");
-    Serial.print(bme.readTemperature());
-    Serial.println(" °C");
-
-    Serial.print("Pressure = ");
-
-    Serial.print(bme.readPressure() / 100.0F);
-    Serial.println(" hPa");
-
-    Serial.print("Approx. Altitude = ");
-    Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-    Serial.println(" m");
-
-    Serial.print("Humidity = ");
-    Serial.print(bme.readHumidity());
-    Serial.println(" %");
-
-    Serial.println();
-}
-```
-Obteniendo valores bastante precisos:
+Al conectar el sensor y subir el código obtendremos valores bastante precisos:
 
 
     Temperature = 22.58 °C
@@ -312,3 +218,53 @@ Obteniendo valores bastante precisos:
     Humidity = 53.76 %
 
 
+## Pantalla
+
+Conexión SPI
+
+Necesitamos instalar las librerías "adafruit ST7778" y usaremos uno de [sus ejemplos](./codigo/test_ST7789/test_ST7789.ino) para probar que funciona
+
+```C++
+#include <Adafruit_GFX.h>    // Core graphics library
+#include <Adafruit_ST7735.h> // Hardware-specific library for ST7735
+#include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
+#include <SPI.h>
+
+
+#define TFT_CS         14
+#define TFT_RST        15
+#define TFT_DC         4
+
+// For 1.14", 1.3", 1.54", 1.69", and 2.0" TFT with ST7789:
+Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
+
+
+
+void setup(void) {
+  Serial.begin(115200);
+  Serial.print("Temperatura, presion y humedad");
+
+  // OR use this initializer (uncomment) if using a 1.14" 240x135 TFT:
+  tft.init(135, 240);           // Init ST7789 240x135
+  
+  Serial.println(F("Initializada"));
+
+  uint16_t time = millis();
+  tft.fillScreen(ST77XX_BLACK);
+  time = millis() - time;
+
+  Serial.println(time);
+  
+}
+
+int counter = 10;
+void loop() {
+  tft.fillScreen(ST77XX_BLACK);
+  tft.setCursor(0, 0);
+  tft.setTextColor(ST77XX_BLUE);
+  tft.setTextSize(4);
+  tft.print(counter++);
+  delay(10);
+}
+
+```
