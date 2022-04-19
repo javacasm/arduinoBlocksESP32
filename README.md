@@ -220,7 +220,9 @@ Al conectar el sensor y subir el código obtendremos valores bastante precisos:
 
 ## Pantalla
 
-Conexión SPI
+Conexión SPI:
+
+![](./images/led_bme280_pantalla_bb.png)
 
 Necesitamos instalar las librerías "adafruit ST7778" y usaremos uno de [sus ejemplos](./codigo/test_ST7789/test_ST7789.ino) para probar que funciona
 
