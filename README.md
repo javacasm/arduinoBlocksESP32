@@ -209,7 +209,7 @@ Si no respetamos la polaridad en la alimentación no sólo no funcionan, sino qu
 
 Vamos a hacer un sencillo montaje
 
-![](./images/wemos_d1_R32_DHT22_bb.png)
+![](./images/steamakers_rgb_dht11_bb.png)
 
 Y ahora importamos el módulo DHT y declaramos un objeto dht del tipo correspondiente (DHT22 en mi caso) y le pasamos un objeto pin al que está conectado. Para leer llamamos a los método **measure()** y recuperamos el valor de la temperatura y la humedad con los métodos **temperature()** y **humidity()**
 
