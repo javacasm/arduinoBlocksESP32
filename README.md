@@ -1,73 +1,78 @@
 # Proyecto
 
-Vamos a medir la posición 3D de una persona con un acelerómetro y generaremos una alarma cuando esta posisición sea una determinada
+Vamos a trabajar conceptos de agricultura de precisión:
+
+* Medida del estado del terreno utilizando sensores: humedad, temperatura, ph
+* Control de riego, administración precisa de productos fitosanitarios, abonos, ...
+* Control del estado del terreno y de las plantas utilizando fotografía por drones
+* [Agrivoltaica](./Agrivoltaica.md)
 
 
 ## Hardware
 
-### MCU/SOC
+## ESP32 Plus STEAMakers
 
-[Adafruit HUZZAH32 - ESP32 Feather](https://tienda.bricogeek.com/placas-adafruit-feather/1108-adafruit-huzzah32-esp32-feather.html) [(Details)](https://learn.adafruit.com/adafruit-huzzah32-esp32-feather?view=all)
+Esta placa [ESP32 STEAMAKERS](https://tienda.bricogeek.com/arduino-compatibles/1705-esp32-steamakers.html) es una versión muy completa de las ESP32 que conocemos.
 
-![](./images/feather_3405_kit_ORIG.jpg)
+Tiene formato Arduino UNO para así poder usar los shields/escudos que ya tengamos.
 
-![](./images/feather_3405_quarter_ORIG.jpg)
+Además incluye un conector para tarjeta SD y permite medir su propio consumo.
 
-* 240 MHz dual core Tensilica LX6 microcontroller with 600 DMIPS
-* 520 KB SRAM
-* 802.11b/g/n HT40 Wi-Fi t
-* Dual mode Bluetooth (classic and BLE)
-* 4 MByte flash
-* Hall sensor
-* 10x capacitive touch interface
-* 3 x UARTs 
-* 3 x SPI 
-* 2 x I2C 
-* 12 x ADC de 12 bits
-* 2 x I2S for Audio
-* 2 x DAC de 10 bits
-
-Conector JST para batería lipo, con cargador incorporado
-
-Podemos leer el valor de la batería en A13/35. Debemos multiplicar por 2 el valor leído
+Como vemos en las imágenes, dispone de conexión sencilla para sensores de tres pines.
 
 
-Debemos soldar los pines
 
-![](./images/feather_solder1.jpg)
+![](./images/steamakers_3.jpg)
+![](./images/steamakers_4.jpg)
 
-## [Acelerómetro 3 ejes adxl345](https://tienda.bricogeek.com/acelerometros/1158-acelerometro-3-ejes-adxl345-2g4g8g16g.html) [(Details)](https://learn.adafruit.com/adxl345-digital-accelerometer?view=all)
+![](./images/steamakers_1.jpg)
+![](./images/steamakers_2.jpg)
 
-![](./images/acelerometro-3-ejes-adxl345-2g4g8g16g.jpg)
+Además se han desdoblado los pines I2C para facilitar la conexión de los dispositivos I2C cada vez más frecuentes.
 
-* Sensor Analog Devices ADXL 345
-* Alimentación: 3.3 a 5V
-* Comunicación: I2C o SPI
-* Sensibilidad configurable: +-2g/4g/8g/16g
+![](./images/STEAMkers_front.png)
+![](./images/STEAMakers_back.png)
 
-## [Sensor de temperatura, humedad y presión BME280](https://tienda.bricogeek.com/sensores-temperatura/1116-sensor-de-temperatura-humedad-y-presion-bme280.html)[(Details)](https://www.adafruit.com/product/2652)
+### Características
 
-![](./images/BME280.jpg)
-
-* Sensor: Bosh BME280
-* Temperatura: +/- 1Cº
-* Humedad: +/- 3%
-* Presión: +/- 1 hPa
-* Alimentación: 3.3 a 5V
-* Comunicación: I2C o SPI
-
-## [Pantalla TFT color 1.14' 240x135 - ST7789](https://tienda.bricogeek.com/pantallas-lcd/1372-pantalla-tft-color-114-240x135-st7789.html) [(Details)](https://learn.adafruit.com/adafruit-1-14-240x135-color-tft-breakout?view=all)
-
-![](./images/pantalla-tft-color-114-240x135-st7789.jpg)
+![](./images/STEAMkers_details.png)
+![](./images/STEAMkers_details2.png)
 
 
-* Tipo: TFT IPS
-* Chip: ST7789
-* Resolución: 240x135 píxeles (260ppi)
-* Diagonal: 1.14 pulgadas
-* Alimentación: 3.3 - 5V
-* Interfaz: SPI
-* Zócalo para tarjeta MicroSD
+Las características más importantes de esta placa son:
+
+* Microcontrolador Tensilica Xtensa 32-bit LX6 a 160MHz.
+* Conectividad Wifi 802.11 b/g/n/e/i.
+* Conectividad Bluetooth 4.2 y modo BLE.
+* Zócalo para tarjetas µSD.
+* 14 entradas y salidas digitales con alimentación.
+* Conector serie hembra con alimentación.
+* Conector I2C para conectar hasta 5 dispositivos a la vez sobre la misma
+placa.
+* Conector hembra I2C para conexión de una pantalla OLED.
+* Conector de Reset.
+* Conector de 5V
+* Conector de 3.3V
+* Interruptor 3.3-5V seleccionable para cambiar entre estas dos tensiones
+en algunos pines de alimentación.
+* Entradas y salidas analógicas.
+* Sensor Hall y de temperatura integrado.
+* 2 convertidores Digital-Analógico (DAC) de 8 bits.
+* 16 convertidores Analógico-Digital (ADC) de 12 bits.
+* 16 canales PWM.
+* 2 UART.
+* 2 canales I2C.
+* 4 canales SPI.
+* 448Kb ROM.
+* 520 KB SRAM.
+* 8KB+8KB SRAM en RTC.
+* 1kbit eFUSE.
+* 512 bytes Memoria Flash (EEPROM).
+* 10 sensores táctiles.
+* 4 temporizadores internos de 64 bits.
+
+
+Incluye un ACS712 conectado a los pines io39 para medida de voltaje e io36 para intensidad y así poder determinar el consumo en cada momento.
 
 ### Herramientas de programación
 
@@ -81,14 +86,21 @@ Instalamos [ArduinoBlock Connector](http://www.arduinoblocks.com/web/site/abconn
 
 ![](./images/ArduinoBlocks_registro.png)
 
+## Creando proyectos
 
-## Led de la placa
+Creamos proyecto personal con la placa ESP32 STEAMakers
 
-La placa tiene incluido un led conectado al pin 13 que encenderemos y apagaremos cada cierto tiempo
+![](./images/arduinoblocks_creando_proyecto.png)
 
-![](./images/programa_led13digital.png)
+Documentaremos la descripción del proyecto y los componentes que vamos a usar
 
-[Led 13 Adafruit Huzzah ESP32](http://www.arduinoblocks.com/web/project/782635)
+## LED 
+
+Conectamos un led RGB 
+
+![](./images/arduinoblocks_led19.png)
+
+[Led 19 Steamakers](http://www.arduinoblocks.com/web/project/1014904)
 
 
 ## Controlando el brillo de un led
@@ -97,48 +109,28 @@ Vamos a controlar ahora el brillo de un led analógicamente
 
 Además vamos a enviar datos a la consola
 
-[led 13 analógico Adafruit Huzzah](http://www.arduinoblocks.com/web/project/782636)
+[led 19 PWM](http://www.arduinoblocks.com/web/project/1014903)
 
-![](./images/programa_ledAnalogico.png)
+![](./images/arduinoblocks_LED_PWM.png)
 
 
 Activamos la consola, seleccionamos la velocidad adecuada y pulsamos "Conectar"
 
 ![](./images/ConsolaSerie.png)
 
-## Placa de prototipo
 
-Es como una regleta de conexiones
-
-![¿cómo funciona una placa prototipo?](./images/breadboard1.gif)
-
-## Potenciómetro
-
-Vamos a medir ahora un valor analógico, el de un potenciómetro. A partir de esta medida calcularemos el brillo de un led. Para ello usaremos unas variables.
-
-![](./images/led_Pot_bb.png)
-
-![](./images/led_Pot_esquematico.png)
-
-[Potenciómetro y led 13 analógico Huzzah](http://www.arduinoblocks.com/web/project/782641)
-![](./images/programa_potenciometro.png)
 
 ## LED RGB
 
-Son 3 leds de colores Rojo, Azul y Verde en un único encapsulado, con una de las patillas conectadas, en nuestro caso es el pin negativo. Conectamos unas resistencias en serie para limitar la cantidad de corriente y el voltaje que llega al led.
+Son 3 leds de colores Rojo, Azul y Verde en un único encapsulado, con una de las patillas conectadas, en nuestro caso es el pin negativo. Deberíamos conectar unas resistencias en serie para limitar la cantidad de corriente y el voltaje que llega al led.
 
-![](./images/led_RGB_bb.png)
-
-![](./images/led_RGB_esquematico.png)
-
+![](./images/steamakers_rgb_bb.png)
 
 Podemos crear colores combinando el brillo de cada uno
 
 ![](./images/Colores-MezclaRGB.jpeg)
 
-![](./images/programa_ledRGB.png)
-
-[Proyecto led RGB](http://www.arduinoblocks.com/web/project/782626)
+![](./images/arduinoblocks_ledRGB.png)
 
 
 ## Led RGB con función
@@ -149,33 +141,205 @@ Para controlar mejor el color del led vamos a crear una función, que es una man
 
 [Proyecto: led RGB con función](http://www.arduinoblocks.com/web/project/782650)
 
-## Acelerómetro 3 ejes adxl345
 
-![](./images/accel-pitch-roll-yaw.jpg)
-
-Vamos a conectar un Acelerómetro de 3 ejes con conexión I2C
+## Sensores
 
 
-![](./images/led_RGB_accelerometro_bb_arduinoblocks.png)
+### Resistencia sensible a la luz o LDR
 
-Vamos a mostrar gráficamente los valores
+![](./images/ModuloLDR.jpg)
+
+Se trata de una resistencia cuyo valor cambia dependiendo de la cantidad de luz que reciba o **LDR**, se la suele llamar también célula fotoeléctrica y se usa en multitud de lugares, como sensores de paso, activación de luces automática,...
+
+![](./images/steamakers_rgb_ldr_bb.png)
+
+El montaje requiere de un divisor de tensión, que es una resistencia que equilibra el valor de la LDR para facilitar la medida en el punto medio. La resistencia debe tener un valor similar al del LDR.
+
+Para determinar su rango o el umbral deberemos medir los valores que obtenemos en las condiciones reales.
+
+### Sensor de humedad de suelo
+
+![](./images/Modulo-Sensor-Humedad-Tierra-agua-suelo-Arduino.jpg)
+
+![](./images/steamakers_rgb_humedad_suelo_bb.png)
+
+Este sensor mide la conductividad del suelo, lo que suele ser proporcional a la humedad de este.
+
+Mediremos los valores del suelo seco y con el nivel de humedad que deseamos para determinar el umbral.
+
+### Sensor de nivel de agua
+
+![](./images/Modulo-Sensor-lluvia-detector-de-gotas-agua-Pic-Arduino-Raindrops-FC-37-YL-83.jpg_Q90.jpg)
+
+![](./images/steamakers_rgb_agua_bb.png)
+
+Es un típico sensor que nos permite medir el nivel de agua de un depósito.
+
+## Sensores DHT
+
+La familia de sensores DHT está formada por sensores de **temperatura** y **humedad** de bajo coste y que se usan en multitud de dispositivos. Tienen un característico encapsulado de plástico, de diferente color según los modelos. Los diferentes sensores de la familia tienen diferente  precisión a la hora de medir.
+
+Todos tienen en común que para comunicarse utilizan un protocolo digital (un lenguaje digital de 1 y 0, organizados de una manera concreta en el tiempo.), y requieren de un único pin digital. 
+
+Para comunicarnos con ellos necesitaremos un módulo que implemente este protocolo de comunicaciones.
+
+También es algo característico que tiene 4 patillas pero que sólo usaremos 3 de ellas: Vcc, GND y Data.
+
+Podemos alimentarlos entre 3 y 5V.
+
+No podemos medir demasiado rápido con ellos, recomendándose que se deje al menos 1 segundo entre medidas.
+
+![](./images/DHT22.jpg)
+
+El DHT22 (también llamado AM2302) tiene una resolución aproximada de 0.5º al medir temperatura y del 2% en la humedad, como podemos ver en su [hoja de datos](https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf) (datasheet)
+
+![](./images/DHT11.jpg)
+
+El DHT11 tiene una resolución aproximada de 2º para la temperatura y 5% en la humedad, como podemos ver en su [hoja de datos](https://www.mouser.com/datasheet/2/758/DHT11-Technical-Data-Sheet-Translated-Version-1143054.pdf)
+
+Los podemos encontrar en formato módulo donde el fabricante suele incorporar una resistencia que mejora la calidad de la comunicación, sólo añade 3 terminales externos y añade los nombre de las patillas:
+
+![](./images/DHT22_modulo.jpg)
+
+![](./images/Modulo_DHT11.jpeg)
+
+Cuando los compremos debemos asegurarnos de conocer cual es cada patilla, puesto que distintos fabricantes no respetan la misma disposición de los terminales. 
+
+Si no respetamos la polaridad en la alimentación no sólo no funcionan, sino que se queman y quedan inservibles.
+
+Vamos a hacer un sencillo montaje
+
+![](./images/wemos_d1_R32_DHT22_bb.png)
+
+Y ahora importamos el módulo DHT y declaramos un objeto dht del tipo correspondiente (DHT22 en mi caso) y le pasamos un objeto pin al que está conectado. Para leer llamamos a los método **measure()** y recuperamos el valor de la temperatura y la humedad con los métodos **temperature()** y **humidity()**
+
+```python
+
+>>> import dht
+>>> import machine
+>>> dht22 = dht.DHT22(machine.Pin(27))
+>>> dht22.measure()
+>>> dht22.temperature()
+22.4
+>>> dht22.humidity()
+44.2
+```
+
+Vamos a empaquetarlo ahora en un fichero donde usaremos un bucle para tomar una medida cada segundo
 
 
-![](./images/programa_plotter_acelerometro.png)
+```python
+import dht
+import machine
+import time
 
-[Plotter acelerometro ADXL345 ESP32](http://www.arduinoblocks.com/web/project/782655)
+v = 0.1
 
-![](./images/grafico_Accel.png)
+dht22 = dht.DHT22(machine.Pin(27))
+
+while True:
+    dht22.measure()
+    print('Temperatura: ',dht22.temperature(),'º C Humedad:',dht22.humidity(),'%')
+    time.sleep(1)
+
+```
 
 
-Mostramos la aceleración con colores
+Vamos a darle un poco más de formato:
 
-![](./images/programa_ledRGB_accel.png)
 
-[Acelerómetro y led RGB](http://www.arduinoblocks.com/web/project/782651)
+```python
+# Test dht
+import dht
+import machine
+import time
 
-Ahora podemos desconectar el dispositivo del PC y comprobar el funcionamiento
+v = 0.2
 
+PIN_DHT = 27
+
+
+dht22 = dht.DHT22(machine.Pin(PIN_DHT))
+
+while True:
+    dht22.measure()
+    # Con más formato ...
+    print(f'Temp: {dht22.temperature():2.1f} C ')
+    print(f'Hum: {dht22.humidity():2.2f} % ')
+    time.sleep(1)
+
+```    
+Donde hemos usado lo que se conoce como f-string: una mezcla de cadena y formato, donde se pueden evaluar expresiones poniéndolas dentro de unas llaves **{}**.
+
+A medida que vayamos usando montajes más complejos y nuestro código vaya creciendo, nos vamos a encontrar con que se producen errores de ejecución que detienen nuestro código. Son lo que se llaman excepciones y vamos a hablar de ellas.
+
+Si se produce un error de comunicación con el sensor, nuestro código producirá una excepción. Por eso es conveniente que estemos prevenidos.
+
+### Relé
+
+
+1. ¿Qué es un **relé**? un relé es un interruptor eléctrico que podemos accionar electrónicamente con una pequeña corriente y que funciona casi siempre electromecánicamente (un electroimán que atrae un contacto eléctrico) de ahí el 'clic-clic' que hacen al funcionar. 
+![](./images/rele-electromagnetico.png)
+1. Uso: los usaremos para controlar dispositivos que necesitan más potencia  que nuestra placa y/o que funcionan a mayores voltajes.
+1. Control: para activar/desactivar los relés sólo tenemos que activar/desactivar el pin de nuestra placa al que está conectado
+1. Alimentación y Consumo: el control de varios relés requiere de una mayor potencia de la que puede suministrar el puerto USB, por lo que usaremos un alimentación más potente si es posible.
+1. Puesto que las señales de control de las placas son de 3.3V pudiera ser que algunos relés no se activen correctamente, aunque la mayoría sí. Lo que es importante es que alimentemos el relé (patilla V o Vcc) con 5V.
+
+## Controlando relés
+
+Una aplicación directa de lo que hemos visto activando leds, puede ser controlar un módulo con varios relés al mismo tiempo.
+
+![](./images/modulo_8xreles.jpeg)
+
+Como hemos dicho, un relé es un dispositivo que nos permite controlar un dispositivo conectado a la corriente con una salida de nuestro dispositivo y sus modestos 5 voltios. Es decir, el relé actúa como un interruptor electrónico y al activar la patilla que lo controla se cierra el contacto que deja pasar la corriente al dispositivo
+
+![](./images/4_Reles_bb.png)
+
+En el montaje del ejemplo vemos como el relé 1 actúa como interruptor del circuito de alimentación de la bombilla. Al activar la salida 18, que controla el relé 1 (por estar conectada a IN1) cerrará la salida del relé y la alimentación llegará a la bombilla. Podemos poner la alimentación desde un enchufe o desde cualquier otra fuente de alimentación. Los relés funcionan como un interruptor eléctrico.
+
+Los dos circuitos eléctricos, de alta potencia (la bombilla) y el de baja potencia (la placa) están aislados entre sí. No obstante **hay que tener cuidado al manejar la parte de alto voltaje/potencia**
+
+
+```python
+import machine
+
+pin_reles = (18,19,23,5)
+reles = []
+for pin in pin_reles:
+    rele = machine.Pin(pin,machine.Pin.OUT)
+    reles.append(rele)
+
+reles[0].on() # Encendemos la bombilla
+
+reles[0].off() # Apagamos la bombilla
+
+
+reles[2].on() # Encendemos el relé 2
+```
+Y con esto ya estamos abriendo la puerta a la domótica...
+
+Hay que comentar que algunos relés tienen lógica invertida, es decir, cuando activamos la correspondiente entrada Inx se desactiva el relé y al revés. Suelen indicarse como "Relés de activación de nivel (trigger) bajo".
+
+## Termostatos
+
+## Iluminación automática
+
+## Motores/Bombas
+
+## Sistema de riego
+
+Versiones:
+
+* Tiempo
+* Humedad del suelo
+* Humedad y lluvia
+
+
+## Control de nivel de depósito
+
+## 
+
+## Alimentación solar
 
 ### IOT
 
