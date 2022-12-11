@@ -157,6 +157,10 @@ El montaje requiere de un divisor de tensión, que es una resistencia que equili
 
 Para determinar su rango o el umbral deberemos medir los valores que obtenemos en las condiciones reales.
 
+![](./images/arduinoblocks_LDR.png)
+
+[Programa: LDR](http://www.arduinoblocks.com/web/project/1014906)
+
 ### Sensor de humedad de suelo
 
 ![](./images/Modulo-Sensor-Humedad-Tierra-agua-suelo-Arduino.jpg)
@@ -166,6 +170,10 @@ Para determinar su rango o el umbral deberemos medir los valores que obtenemos e
 Este sensor mide la conductividad del suelo, lo que suele ser proporcional a la humedad de este.
 
 Mediremos los valores del suelo seco y con el nivel de humedad que deseamos para determinar el umbral.
+
+![](./images/arduinoblocks_HumedadSuelo.png)
+
+[Programa: humedad](http://www.arduinoblocks.com/web/project/1014907)
 
 ### Sensor de nivel de agua
 
@@ -211,69 +219,17 @@ Vamos a hacer un sencillo montaje
 
 ![](./images/steamakers_rgb_dht11_bb.png)
 
-Y ahora importamos el módulo DHT y declaramos un objeto dht del tipo correspondiente (DHT22 en mi caso) y le pasamos un objeto pin al que está conectado. Para leer llamamos a los método **measure()** y recuperamos el valor de la temperatura y la humedad con los métodos **temperature()** y **humidity()**
+El programa:
 
-```python
+![](./images/arduinoblocks_DHT11.png)
 
->>> import dht
->>> import machine
->>> dht22 = dht.DHT22(machine.Pin(27))
->>> dht22.measure()
->>> dht22.temperature()
-22.4
->>> dht22.humidity()
-44.2
-```
+[Programa: DHT](http://www.arduinoblocks.com/web/project/1014908)
 
-Vamos a empaquetarlo ahora en un fichero donde usaremos un bucle para tomar una medida cada segundo
+Si vemos que se producen errores:
 
+![](./images/arduinoblocks_DHT11_v2.png)
 
-```python
-import dht
-import machine
-import time
-
-v = 0.1
-
-dht22 = dht.DHT22(machine.Pin(27))
-
-while True:
-    dht22.measure()
-    print('Temperatura: ',dht22.temperature(),'º C Humedad:',dht22.humidity(),'%')
-    time.sleep(1)
-
-```
-
-
-Vamos a darle un poco más de formato:
-
-
-```python
-# Test dht
-import dht
-import machine
-import time
-
-v = 0.2
-
-PIN_DHT = 27
-
-
-dht22 = dht.DHT22(machine.Pin(PIN_DHT))
-
-while True:
-    dht22.measure()
-    # Con más formato ...
-    print(f'Temp: {dht22.temperature():2.1f} C ')
-    print(f'Hum: {dht22.humidity():2.2f} % ')
-    time.sleep(1)
-
-```    
-Donde hemos usado lo que se conoce como f-string: una mezcla de cadena y formato, donde se pueden evaluar expresiones poniéndolas dentro de unas llaves **{}**.
-
-A medida que vayamos usando montajes más complejos y nuestro código vaya creciendo, nos vamos a encontrar con que se producen errores de ejecución que detienen nuestro código. Son lo que se llaman excepciones y vamos a hablar de ellas.
-
-Si se produce un error de comunicación con el sensor, nuestro código producirá una excepción. Por eso es conveniente que estemos prevenidos.
+[Programa v2: DHT11](http://www.arduinoblocks.com/web/project/1014909)
 
 ### Relé
 
